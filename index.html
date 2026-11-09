@@ -3,54 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AP.Pro - Thực Phẩm Bổ Sung Dinh Dưỡng</title>
+    <link rel="icon" type="image/png" href="Pics/Vincent_Icon.png">
+    <title>Vincent Food - Thực Phẩm Bổ Sung Dinh Dưỡng</title>
+    <meta name="description" content="Vincent Food: sữa bột Specal, Otis Colostrum, AP.Pro và yến chưng sẵn Naturnest. Không phụ gia, không chất tăng trưởng, không chất điều vị.">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         
+        :root {
+            --brand: #0f3d7a;
+            --brand-dark: #0a2b57;
+            --accent: #e8a317;
+        }
+        .brand-bar { background: linear-gradient(135deg, var(--brand-dark), var(--brand)); }
+        .dot-active { background: var(--brand); }
+        .btn-brand { background: var(--brand); color: #fff; }
+        .btn-brand:hover { background: var(--brand-dark); }
+        .nav-tab { padding: 7px 16px; border-radius: 9999px; white-space: nowrap; color: rgba(255,255,255,.85); cursor: pointer; }
+        .nav-tab:hover { background: rgba(255,255,255,.14); color: #fff; }
+        .nav-tab.font-bold { background: var(--accent); color: #1c1917; }
+        .tabs-row { scrollbar-width: none; }
+        .tabs-row::-webkit-scrollbar { display: none; }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: radial-gradient(circle at 50% 45%, #ffffff 0%, #f3f1ed 65%, #e7e4de 100%);
             overflow-x: hidden;
         }
 
-        /* Hiệu ứng chuyển động mượt chuẩn Spatial UI */
         .product-item {
             transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1);
             will-change: transform, opacity, filter;
         }
 
-        /* Đổ bóng chân thực dưới đáy lon sữa */
         .can-shadow {
             filter: drop-shadow(0 28px 24px rgba(0, 0, 0, 0.16));
         }
 
-        /* Thanh cuộn tinh gọn cho bảng chi tiết */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
 <body class="text-slate-900 min-h-screen flex flex-col justify-between select-none">
 
-    <!-- HEADER TỐI GIẢN -->
-    <header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between z-20">
-        <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-full bg-amber-500 flex items-center justify-center text-white font-extrabold text-sm tracking-tighter shadow-sm">
-                AP
+    <!-- HEADER THƯƠNG HIỆU VINCENT FOOD -->
+    <header class="w-full z-20 brand-bar text-white">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <div class="flex items-center gap-3">
+                <img src="Pics/Vincent_Lotus.png" alt="Vincent Logo" class="h-10 w-auto">
+                <span class="font-extrabold text-xl tracking-wide">Vincent Food</span>
             </div>
-            <span class="font-bold text-lg tracking-tight text-slate-800">AP.Pro <span class="font-normal text-slate-400 text-sm hidden sm:inline">| Dinh dưỡng chuyên biệt</span></span>
-        </div>
-
-        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
-            <button onclick="selectBrand('ap-pro')" class="nav-tab hover:text-slate-900 transition" data-brand="ap-pro">AP.Pro</button>
-            <button onclick="selectBrand('hu-yen')" class="nav-tab hover:text-slate-900 transition" data-brand="hu-yen">Hũ Yến</button>
-            <button onclick="selectBrand('otis')" class="nav-tab hover:text-slate-900 transition" data-brand="otis">Otis</button>
-            <button onclick="selectBrand('specal')" class="nav-tab hover:text-slate-900 transition" data-brand="specal">Specal</button>
-            <button onclick="selectBrand('yen-nhan-sam')" class="nav-tab hover:text-slate-900 transition" data-brand="yen-nhan-sam">Yến sâm</button>
-        </nav>
-
-        <div class="text-xs font-semibold uppercase tracking-widest text-slate-400">
-            900G Series
+            <nav class="tabs-row order-3 md:order-none w-full md:w-auto flex items-center gap-1 overflow-x-auto text-sm font-semibold" aria-label="Thương hiệu sản phẩm">
+                <button onclick="selectBrand('specal')" class="nav-tab transition" data-brand="specal">Specal</button>
+                <button onclick="selectBrand('otis')" class="nav-tab transition" data-brand="otis">Otis</button>
+                <button onclick="selectBrand('ap-pro')" class="nav-tab transition" data-brand="ap-pro">AP.Pro</button>
+                <button onclick="selectBrand('hu-yen')" class="nav-tab transition" data-brand="hu-yen">Yến Chưng</button>
+                <button onclick="selectBrand('yen-nhan-sam')" class="nav-tab transition" data-brand="yen-nhan-sam">Yến Nhân Sâm</button>
+            </nav>
+            <a href="tel:0776823838" class="text-sm font-bold rounded-full px-4 py-1.5 text-slate-900 hover:brightness-95 transition" style="background:var(--accent)">077 682 3838</a>
         </div>
     </header>
 
@@ -65,7 +75,7 @@
             </div>
 
             <div>
-                <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-1">Thực phẩm bổ sung</p>
+                <p id="productBrand" class="text-sm font-bold mb-1" style="color:var(--brand)">Thực phẩm bổ sung AP.Pro</p>
                 <h1 id="productTitle" class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
                     AP.Pro CURCUMIN
                 </h1>
@@ -76,38 +86,32 @@
             </p>
 
             <!-- CÁC THÀNH PHẦN NỔI BẬT (PILLS) -->
-            <div id="keyIngredients" class="flex flex-wrap justify-center lg:justify-start gap-2 pt-1">
-                <!-- Render bằng JS -->
-            </div>
+            <div id="keyIngredients" class="flex flex-wrap justify-center lg:justify-start gap-2 pt-1"></div>
 
             <!-- NÚT HÀNH ĐỘNG -->
             <div class="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <button onclick="openDrawer()" class="px-7 py-3.5 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 active:scale-95 transition shadow-lg shadow-slate-900/15 flex items-center gap-2 cursor-pointer">
+                <button onclick="openDrawer()" class="btn-brand px-7 py-3.5 rounded-full text-sm font-semibold active:scale-95 transition shadow-lg shadow-slate-900/15 flex items-center gap-2 cursor-pointer">
                     <span>Xem chi tiết thành phần</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
                 </button>
-                <span class="text-xs text-slate-400 font-medium px-2">Khối lượng tịnh: 900g</span>
+                <span id="packNote" class="text-xs text-slate-500 font-medium px-2">Khối lượng tịnh: 900g</span>
             </div>
         </div>
 
         <!-- CỘT PHẢI: SÂN KHẤU 3D LƯỚT SẢN PHẨM -->
         <div id="stage" class="relative w-full lg:w-7/12 h-[340px] sm:h-[430px] order-1 lg:order-2 flex items-center justify-center touch-pan-y">
-            <!-- Vòng sáng nền tạo điểm nhấn -->
             <div id="ambientGlow" class="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-amber-400/20 blur-3xl transition-colors duration-700 pointer-events-none"></div>
-
-            <!-- Danh sách 4 lon sữa sẽ được render và điều phối tọa độ tại đây -->
             <div id="carouselContainer" class="relative w-full h-full flex items-center justify-center"></div>
         </div>
     </main>
 
-    <!-- THANH ĐIỀU HƯỚNG DƯỚI CÙNG (GIỐNG THANH SLIDER TRONG CLIP) -->
+    <!-- THANH ĐIỀU HƯỚNG DƯỚI CÙNG -->
     <footer class="w-full max-w-3xl mx-auto px-6 py-6 z-20">
         <div class="flex items-center justify-between gap-4 bg-white/70 backdrop-blur-md px-5 py-3 rounded-full border border-white shadow-sm">
             <button onclick="prevProduct()" class="w-9 h-9 rounded-full flex items-center justify-center hover:bg-slate-200/70 text-slate-700 transition cursor-pointer" aria-label="Sản phẩm trước">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
             </button>
 
-            <!-- Thanh chỉ báo tiến trình -->
             <div class="min-w-0 flex-1 flex items-center justify-center">
                 <div id="dotsContainer" class="flex max-w-full items-center gap-2 overflow-x-auto py-1 px-1"></div>
             </div>
@@ -119,18 +123,34 @@
         <p class="text-center text-[11px] text-slate-400 mt-2.5">Chạm vào sản phẩm bên cạnh, vuốt ngang hoặc dùng phím mũi tên ← → để chuyển đổi</p>
     </footer>
 
+    <!-- THÔNG TIN CÔNG TY VINCENT FOOD -->
+    <section class="brand-bar text-white mt-4">
+        <div class="max-w-7xl mx-auto px-6 py-8 grid gap-8 md:grid-cols-2 items-center text-sm">
+            <div class="flex items-center gap-5">
+                <img src="Pics/Vincent_Logo.png" alt="Vincent Food" class="h-24 w-auto shrink-0">
+                <p class="text-white/80 leading-relaxed">Công ty TNHH Chế Biến Thực Phẩm Vincent Food. Tiêu chí 3 không: không chất phụ gia, không chất tăng trưởng, không chất điều vị.</p>
+            </div>
+            <div class="space-y-1.5">
+                <div class="font-bold">Liên hệ</div>
+                <p class="text-white/80">86/10 Lý Tự Trọng, P. An Cư, Q. Ninh Kiều, TP Cần Thơ</p>
+                <p><a class="hover:text-amber-300" href="tel:0776823838">077 682 3838</a> - <a class="hover:text-amber-300" href="tel:0859400794">0859 400 794</a></p>
+                <p><a class="hover:text-amber-300" href="mailto:vincentfood86@gmail.com">vincentfood86@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="border-t border-white/15 text-center text-xs text-white/60 px-6 py-3">
+            Thực phẩm bổ sung, không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh. © Vincent Food. Website: vincentfood.vn
+        </div>
+    </section>
+
     <!-- NGĂN KÉO XEM CHI TIẾT SẢN PHẨM (SLIDE-OVER DRAWER) -->
     <div id="detailDrawer" class="fixed inset-0 z-50 hidden">
-        <!-- Lớp nền mờ -->
         <div id="drawerBackdrop" onclick="closeDrawer()" class="absolute inset-0 bg-slate-900/30 backdrop-blur-xs opacity-0 transition-opacity duration-300"></div>
         
-        <!-- Bảng nội dung trượt từ phải sang -->
         <div id="drawerPanel" class="absolute right-0 top-0 h-full w-full max-w-lg bg-white shadow-2xl translate-x-full transition-transform duration-300 ease-out flex flex-col justify-between overflow-hidden">
-            
             <div class="p-6 sm:p-8 overflow-y-auto space-y-6">
                 <div class="flex items-start justify-between border-b border-slate-100 pb-4">
                     <div>
-                        <span id="drawerTag" class="text-xs font-bold uppercase tracking-wider text-amber-600">Thực phẩm bổ sung</span>
+                        <span id="drawerTag" class="text-xs font-bold text-amber-600">Thực phẩm bổ sung</span>
                         <h2 id="drawerTitle" class="text-2xl font-extrabold text-slate-900 mt-0.5">AP.Pro CURCUMIN</h2>
                     </div>
                     <button onclick="closeDrawer()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition cursor-pointer">
@@ -138,25 +158,20 @@
                     </button>
                 </div>
 
-                <!-- Ảnh thu nhỏ trong drawer -->
                 <div class="bg-slate-50 rounded-2xl p-4 flex items-center gap-4 border border-slate-100">
                     <img id="drawerImg" src="" alt="" class="w-20 h-20 object-contain rounded-lg">
                     <div>
                         <div class="text-xs text-slate-400 font-medium">Đối tượng sử dụng</div>
                         <div id="drawerTarget" class="text-sm font-bold text-slate-800 mt-0.5"></div>
-                        <div class="text-xs text-slate-500 mt-1">Quy cách: Lon thiếc 900g</div>
+                        <div id="drawerPack" class="text-xs text-slate-500 mt-1"></div>
                     </div>
                 </div>
 
-                <!-- Danh sách thành phần chi tiết -->
                 <div>
                     <h3 class="text-sm font-bold uppercase tracking-wider text-slate-900 mb-3">Thành phần & Cơ chế tác động</h3>
-                    <div id="drawerIngredientsList" class="space-y-3">
-                        <!-- Render bằng JS -->
-                    </div>
+                    <div id="drawerIngredientsList" class="space-y-3"></div>
                 </div>
 
-                <!-- Công dụng tổng hợp -->
                 <div class="bg-amber-50/70 border border-amber-200/60 rounded-2xl p-4">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-amber-900 mb-1.5">Công dụng chính</h4>
                     <p id="drawerBenefits" class="text-sm text-amber-950/80 leading-relaxed"></p>
@@ -164,7 +179,7 @@
             </div>
 
             <div class="p-5 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between gap-3">
-                <button onclick="closeDrawer()" class="w-full py-3 rounded-xl bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition cursor-pointer">
+                <button onclick="closeDrawer()" class="btn-brand w-full py-3 rounded-xl font-semibold text-sm transition cursor-pointer">
                     Đóng bảng chi tiết
                 </button>
             </div>
@@ -172,8 +187,6 @@
     </div>
 
     <script>
-        // DỮ LIỆU 4 SẢN PHẨM ĐƯỢC TRÍCH XUẤT TỪ HÌNH ẢNH CỦA BẠN
-        // Lưu ý: Thay thế thuộc tính 'image' bằng link ảnh sản phẩm thật (nên dùng ảnh PNG tách nền để đẹp nhất)
         const products = [
             {
                 id: "curcumin",
@@ -257,49 +270,56 @@
             }
         ];
 
+        const brandInfo = {
+            "specal": "Dòng sữa bột Specal Colostrum bổ sung dưỡng chất giúp hỗ trợ sức khoẻ cũng như sự phát triển toàn diện của trẻ nhỏ.",
+            "otis": "Dòng sữa bột Otis Colostrum của Vincent Food.",
+            "hu-yen": "Yến chưng sẵn Naturnest bổ dưỡng, nhiều hương vị thơm ngon, phù hợp khẩu vị của trẻ em và người lớn.",
+            "yen-nhan-sam": "Yến chưng sẵn Naturnest bổ dưỡng, nhiều hương vị thơm ngon, phù hợp khẩu vị của trẻ em và người lớn."
+        };
+
+        products.forEach(p => { p.brand = "AP.Pro"; p.net = "900g"; });
+
         const catalogProducts = [
-            { brandKey: "hu-yen", brand: "Hũ Yến", shortName: "Canxi", title: "Hũ Yến Canxi", image: "Pics/Hu_Yen_Canxi.png", themeColor: "bg-emerald-600", glowColor: "bg-emerald-400/25" },
-            { brandKey: "hu-yen", brand: "Hũ Yến", shortName: "Đông trùng hạ thảo", title: "Hũ Yến Đông Trùng Hạ Thảo", image: "Pics/Hu_Yen_DTHT.png", themeColor: "bg-amber-700", glowColor: "bg-amber-500/20" },
-            { brandKey: "hu-yen", brand: "Hũ Yến", shortName: "Đường phèn", title: "Hũ Yến Đường Phèn", image: "Pics/Hu_Yen_Duong.png", themeColor: "bg-red-600", glowColor: "bg-red-400/20" },
-            { brandKey: "hu-yen", brand: "Hũ Yến", shortName: "Kids", title: "Hũ Yến Kids", image: "Pics/Hu_Yen_Kid.png", themeColor: "bg-cyan-600", glowColor: "bg-cyan-400/25" },
-            { brandKey: "hu-yen", brand: "Hũ Yến", shortName: "Tiểu đường", title: "Hũ Yến Tiểu Đường", image: "Pics/Hu_Yen_Tieu_Duong.png", themeColor: "bg-indigo-700", glowColor: "bg-indigo-400/20" },
-            { brandKey: "otis", brand: "Otis", shortName: "Canxi", title: "Otis Canxi", image: "Pics/Otis_Canxi.png", themeColor: "bg-sky-600", glowColor: "bg-sky-400/25" },
-            { brandKey: "otis", brand: "Otis", shortName: "GluCare", title: "Otis GluCare", image: "Pics/Otis_Glu.png", themeColor: "bg-red-600", glowColor: "bg-red-400/20" },
-            { brandKey: "otis", brand: "Otis", shortName: "Newborn Colostrum", title: "Otis Newborn Colostrum", image: "Pics/Otis_NewBorn.png", themeColor: "bg-pink-600", glowColor: "bg-pink-400/20" },
-            { brandKey: "otis", brand: "Otis", shortName: "Pedia & Gain", title: "Otis Pedia & Gain", image: "Pics/Otis_Pedia.png", themeColor: "bg-rose-600", glowColor: "bg-rose-400/20" },
-            { brandKey: "otis", brand: "Otis", shortName: "Sure Advance", title: "Otis Sure Advance", image: "Pics/Otis_Sure.png", themeColor: "bg-amber-700", glowColor: "bg-amber-500/20" },
-            { brandKey: "specal", brand: "Specal", shortName: "Canxi", title: "Specal Canxi Collagen", image: "Pics/Specal_Canxi.png", themeColor: "bg-blue-700", glowColor: "bg-blue-500/20" },
-            { brandKey: "specal", brand: "Specal", shortName: "Fucoidan", title: "Specal Fucoidan Sữa Hạt", image: "Pics/Specal_Fucoidan.png", themeColor: "bg-blue-700", glowColor: "bg-blue-500/20" },
-            { brandKey: "specal", brand: "Specal", shortName: "Gold 1", title: "Specal Gold 1", image: "Pics/Specal_Gold1.png", themeColor: "bg-blue-700", glowColor: "bg-blue-500/20" },
-            { brandKey: "specal", brand: "Specal", shortName: "Curcumin", title: "Specal Curcumin", image: "Pics/Specal_Nghe.png", themeColor: "bg-amber-600", glowColor: "bg-amber-400/25" },
-            { brandKey: "specal", brand: "Specal", shortName: "NutMom", title: "Specal NutMom", image: "Pics/Specal_NutMom.png", themeColor: "bg-amber-700", glowColor: "bg-amber-500/20" },
-            { brandKey: "specal", brand: "Specal", shortName: "Pedia", title: "Specal Pedia", image: "Pics/Specal_Pedia.png", themeColor: "bg-blue-700", glowColor: "bg-blue-500/20" },
-            { brandKey: "specal", brand: "Specal", shortName: "Sure", title: "Specal Sure Diamond", image: "Pics/Specal_Sure.png", themeColor: "bg-yellow-600", glowColor: "bg-yellow-400/25" },
-            { brandKey: "specal", brand: "Specal", shortName: "Tiểu đường", title: "Specal GluNatto Care", image: "Pics/Specal_Tieu_Duong.png", themeColor: "bg-fuchsia-700", glowColor: "bg-fuchsia-400/20" },
-            { brandKey: "yen-nhan-sam", brand: "Yến Nhân Sâm", shortName: "Yến Nhân Sâm", title: "Yến Nhân Sâm Khánh Hòa", image: "Pics/Yen_Nhan_Sam.png", themeColor: "bg-amber-600", glowColor: "bg-amber-400/25" }
+            { brandKey: "hu-yen", brand: "Naturnest", shortName: "Canxi", title: "Tổ Yến Chưng Sẵn Naturnest Canxi", image: "Pics/Hu_Yen_Canxi.png", themeColor: "bg-emerald-600", glowColor: "bg-emerald-400/25" },
+            { brandKey: "hu-yen", brand: "Naturnest", shortName: "Đông trùng hạ thảo", title: "Tổ Yến Chưng Sẵn Naturnest Đông Trùng Hạ Thảo", image: "Pics/Hu_Yen_DTHT.png", themeColor: "bg-amber-700", glowColor: "bg-amber-500/20" },
+            { brandKey: "hu-yen", brand: "Naturnest", shortName: "Đường phèn", title: "Tổ Yến Chưng Sẵn Naturnest Đường Phèn", image: "Pics/Hu_Yen_Duong.png", themeColor: "bg-red-600", glowColor: "bg-red-400/20" },
+            { brandKey: "hu-yen", brand: "Naturnest", shortName: "Kids", title: "Tổ Yến Chưng Sẵn Naturnest Kids Pedia", image: "Pics/Hu_Yen_Kid.png", themeColor: "bg-cyan-600", glowColor: "bg-cyan-400/25" },
+            { brandKey: "hu-yen", brand: "Naturnest", shortName: "Tiểu đường", title: "Tổ Yến Chưng Sẵn Naturnest Tiểu Đường", image: "Pics/Hu_Yen_Tieu_Duong.png", themeColor: "bg-indigo-700", glowColor: "bg-indigo-400/20" },
+            { brandKey: "otis", brand: "Otis Colostrum", shortName: "Canxi", title: "Otis Canxi", image: "Pics/Otis_Canxi.png", themeColor: "bg-sky-600", glowColor: "bg-sky-400/25" },
+            { brandKey: "otis", brand: "Otis Colostrum", shortName: "GluCare", title: "Otis GluCare", image: "Pics/Otis_Glu.png", themeColor: "bg-red-600", glowColor: "bg-red-400/20" },
+            { brandKey: "otis", brand: "Otis Colostrum", shortName: "Newborn Colostrum", title: "Otis Newborn Colostrum", image: "Pics/Otis_NewBorn.png", themeColor: "bg-pink-600", glowColor: "bg-pink-400/20" },
+            { brandKey: "otis", brand: "Otis Colostrum", shortName: "Pedia & Gain", title: "Otis Pedia & Gain", image: "Pics/Otis_Pedia.png", themeColor: "bg-rose-600", glowColor: "bg-rose-400/20" },
+            { brandKey: "otis", brand: "Otis Colostrum", shortName: "Sure Advance", title: "Otis Sure Advance", image: "Pics/Otis_Sure.png", themeColor: "bg-amber-700", glowColor: "bg-amber-500/20" },
+            { brandKey: "specal", brand: "Specal Colostrum", shortName: "Canxi", title: "Specal Canxi Collagen", image: "Pics/Specal_Canxi.png", themeColor: "bg-blue-700", glowColor: "bg-blue-500/20" },
+            { brandKey: "specal", brand: "Specal Colostrum", shortName: "Fucoidan", title: "Specal Fucoidan", net: "400g", image: "Pics/Specal_Fucoidan.png", themeColor: "bg-blue-700", glowColor: "bg-blue-500/20" },
+            { brandKey: "specal", brand: "Specal Colostrum", shortName: "Gold 1", title: "Specal Gold 1", net: "400g & 900g", image: "Pics/Specal_Gold1.png", themeColor: "bg-blue-700", glowColor: "bg-blue-500/20" },
+            { brandKey: "specal", brand: "Specal Colostrum", shortName: "Curcumin", title: "Specal Curcumin", net: "400g", image: "Pics/Specal_Nghe.png", themeColor: "bg-amber-600", glowColor: "bg-amber-400/25" },
+            { brandKey: "specal", brand: "Specal Colostrum", shortName: "Nutmom", title: "Specal Nutmom", net: "400g", image: "Pics/Specal_NutMom.png", themeColor: "bg-amber-700", glowColor: "bg-amber-500/20" },
+            { brandKey: "specal", brand: "Specal Colostrum", shortName: "Pedia Gain", title: "Specal Pedia Gain", net: "900g", image: "Pics/Specal_Pedia.png", themeColor: "bg-blue-700", glowColor: "bg-blue-500/20" },
+            { brandKey: "specal", brand: "Specal Colostrum", shortName: "Sure Diamond", title: "Specal Sure Diamond", net: "400g", image: "Pics/Specal_Sure.png", themeColor: "bg-yellow-600", glowColor: "bg-yellow-400/25" },
+            { brandKey: "specal", brand: "Specal Colostrum", shortName: "GluNatto Care", title: "Specal GluNatto Care", net: "400g", image: "Pics/Specal_Tieu_Duong.png", themeColor: "bg-fuchsia-700", glowColor: "bg-fuchsia-400/20" },
+            { brandKey: "yen-nhan-sam", brand: "Naturnest", shortName: "Yến Nhân Sâm", title: "Yến Nhân Sâm Khánh Hòa", image: "Pics/Yen_Nhan_Sam.png", themeColor: "bg-amber-600", glowColor: "bg-amber-400/25" }
         ];
 
         products.push(...catalogProducts.map(product => ({
             ...product,
             id: product.image,
-            target: "Tham khảo thông tin trên bao bì",
-            summary: "Thông tin mô tả sản phẩm chưa được cung cấp. Vui lòng xem nhãn bao bì để biết thành phần và hướng dẫn sử dụng.",
+            target: "Xem thông tin trên bao bì sản phẩm",
+            summary: brandInfo[product.brandKey],
             pills: [],
             ingredients: [],
-            benefits: "Vui lòng tham khảo công dụng và hướng dẫn sử dụng được in trên bao bì sản phẩm."
+            benefits: "Thành phần, công dụng và hướng dẫn sử dụng được in trên bao bì. Liên hệ Vincent Food theo số 077 682 3838 để được tư vấn."
         })));
 
         let currentIndex = 0;
         const container = document.getElementById('carouselContainer');
         const dotsContainer = document.getElementById('dotsContainer');
 
-        // Khởi tạo các phần tử trên sân khấu 3D
         function initStage() {
             container.innerHTML = '';
             dotsContainer.innerHTML = '';
 
             products.forEach((prod, index) => {
-                // Tạo thẻ sản phẩm trên sân khấu
                 const item = document.createElement('div');
                 item.className = 'product-item absolute flex flex-col items-center justify-center cursor-pointer';
                 item.dataset.index = index;
@@ -307,8 +327,8 @@
 
                 item.innerHTML = `
                     <div class="relative group">
-                            <img src="${prod.image}" alt="${prod.title}" 
-                                class="w-72 sm:w-80 md:w-[26rem] max-w-[90vw] max-h-[90%] h-auto object-contain can-shadow transition-transform duration-500 group-hover:scale-[1.03]">
+                        <img src="${prod.image}" alt="${prod.title}" 
+                            class="w-72 sm:w-80 md:w-[26rem] max-w-[90vw] max-h-[90%] h-auto object-contain can-shadow transition-transform duration-500 group-hover:scale-[1.03]">
                         <span class="item-label mt-3 block text-center text-xs font-bold tracking-wider uppercase text-slate-500 transition-opacity duration-300">
                             ${prod.shortName}
                         </span>
@@ -316,7 +336,6 @@
                 `;
                 container.appendChild(item);
 
-                // Tạo nút chấm chỉ báo dưới footer
                 const dot = document.createElement('button');
                 dot.className = 'h-2 rounded-full transition-all duration-300 cursor-pointer';
                 dot.onclick = () => selectProduct(index);
@@ -327,7 +346,6 @@
             updateStage();
         }
 
-        // Cập nhật vị trí không gian 3D & Nội dung chữ
         function updateStage() {
             const items = document.querySelectorAll('.product-item');
             const dots = dotsContainer.querySelectorAll('button');
@@ -335,14 +353,12 @@
             const total = products.length;
 
             items.forEach((item, i) => {
-                // Tính khoảng cách vòng tròn (-1, 0, 1, 2)
                 let diff = (i - currentIndex + total) % total;
                 if (diff > total / 2) diff -= total;
 
                 const label = item.querySelector('.item-label');
 
                 if (diff === 0) {
-                    // SẢN PHẨM CHÍNH Ở TRUNG TÂM
                     item.style.transform = 'translate3d(0px, 0px, 0px) scale(1.08)';
                     item.style.opacity = '1';
                     item.style.zIndex = '30';
@@ -350,7 +366,6 @@
                     item.style.pointerEvents = 'auto';
                     label.style.opacity = '0';
                 } else if (diff === 1) {
-                    // SẢN PHẨM BÊN PHẢI (LÙI RA SAU VÀ THU NHỎ)
                     item.style.transform = 'translate3d(175px, -35px, -120px) scale(0.62)';
                     item.style.opacity = '0.78';
                     item.style.zIndex = '20';
@@ -358,7 +373,6 @@
                     item.style.pointerEvents = 'auto';
                     label.style.opacity = '1';
                 } else if (diff === -1) {
-                    // SẢN PHẨM BÊN TRÁI (LÙI RA SAU VÀ THU NHỎ)
                     item.style.transform = 'translate3d(-175px, 35px, -120px) scale(0.62)';
                     item.style.opacity = '0.78';
                     item.style.zIndex = '20';
@@ -366,7 +380,6 @@
                     item.style.pointerEvents = 'auto';
                     label.style.opacity = '1';
                 } else {
-                    // SẢN PHẨM Ở XA PHÍA SAU CÙNG
                     item.style.transform = 'translate3d(0px, -75px, -250px) scale(0.42)';
                     item.style.opacity = '0';
                     item.style.zIndex = '0';
@@ -376,34 +389,34 @@
                 }
             });
 
-            // Cập nhật thanh chỉ báo dưới đáy
             dots.forEach((dot, i) => {
                 if (i === currentIndex) {
-                    dot.className = 'w-8 h-2 rounded-full bg-slate-900 transition-all duration-300 cursor-pointer';
+                    dot.className = 'w-8 h-2 rounded-full dot-active transition-all duration-300 cursor-pointer';
                 } else {
                     dot.className = 'w-2 h-2 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300 cursor-pointer';
                 }
             });
-            dots[currentIndex].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+            if (dots[currentIndex]) {
+                dots[currentIndex].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+            }
 
-            // Cập nhật menu trên cùng
-            navTabs.forEach((tab, i) => {
+            navTabs.forEach((tab) => {
                 if (tab.dataset.brand === products[currentIndex].brandKey) {
-                    tab.classList.add('text-slate-900', 'font-bold');
+                    tab.classList.add('font-bold');
                 } else {
-                    tab.classList.remove('text-slate-900', 'font-bold');
+                    tab.classList.remove('font-bold');
                 }
             });
 
-            // Cập nhật thông tin văn bản bên trái
             const currentProd = products[currentIndex];
             document.getElementById('productTitle').innerText = currentProd.title;
             document.getElementById('productTarget').innerText = currentProd.target;
             document.getElementById('productSummary').innerText = currentProd.summary;
+            document.getElementById('productBrand').innerText = 'Thực phẩm bổ sung ' + currentProd.brand;
+            document.getElementById('packNote').innerText = currentProd.net ? 'Khối lượng tịnh: ' + currentProd.net : '';
             document.getElementById('badgeDot').className = `w-2 h-2 rounded-full ${currentProd.themeColor}`;
             document.getElementById('ambientGlow').className = `absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full ${currentProd.glowColor} blur-3xl transition-colors duration-700 pointer-events-none`;
 
-            // Cập nhật các thẻ thành phần nổi bật
             const pillsContainer = document.getElementById('keyIngredients');
             pillsContainer.innerHTML = currentProd.pills.map(pill => `
                 <span class="px-3 py-1.5 rounded-lg bg-white/90 border border-slate-200/80 text-xs font-semibold text-slate-700 shadow-2xs">
@@ -432,7 +445,6 @@
             updateStage();
         }
 
-        // XỬ LÝ NGĂN KÉO XEM CHI TIẾT (DRAWER)
         function openDrawer() {
             const prod = products[currentIndex];
             document.getElementById('drawerTitle').innerText = prod.title;
@@ -440,6 +452,7 @@
             document.getElementById('drawerImg').src = prod.image;
             document.getElementById('drawerImg').alt = prod.title;
             document.getElementById('drawerBenefits').innerText = prod.benefits;
+            document.getElementById('drawerPack').innerText = prod.net ? 'Khối lượng tịnh: ' + prod.net : '';
 
             const listEl = document.getElementById('drawerIngredientsList');
             listEl.innerHTML = prod.ingredients.length ? prod.ingredients.map(item => `
@@ -447,7 +460,7 @@
                     <div class="font-bold text-sm text-slate-900">${item.name}</div>
                     <p class="text-xs text-slate-600 mt-1 leading-relaxed">${item.desc}</p>
                 </div>
-            `).join('') : '<p class="text-sm text-slate-500">Thông tin thành phần chưa được cung cấp.</p>';
+            `).join('') : '<p class="text-sm text-slate-500">Xem bảng thành phần trên bao bì hoặc liên hệ Vincent Food để được tư vấn.</p>';
 
             const drawer = document.getElementById('detailDrawer');
             const backdrop = document.getElementById('drawerBackdrop');
@@ -473,7 +486,6 @@
             }, 300);
         }
 
-        // HỖ TRỢ VUỐT CẢM ỨNG TRÊN ĐIỆN THOẠI & PHÍM MŨI TÊN
         let touchStartX = 0;
         const stageEl = document.getElementById('stage');
 
@@ -493,7 +505,6 @@
             if (e.key === 'Escape') closeDrawer();
         });
 
-        // Chạy khởi tạo
         initStage();
     </script>
 </body>
